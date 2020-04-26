@@ -2,12 +2,16 @@
 
 (in-package #:cl-mime-from-string)
 
-(defun to-cond-form-string= (str1 form)
-  (if (or (eq t (first form))
-          (eq 'otherwise (first form)))
-      `(t ,(second form))
-      `((string= ,str1 ,(first form))
-        ,(second form))))
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  
+  (defun to-cond-form-string= (str1 form)
+    (if (or (eq t (first form))
+            (eq 'otherwise (first form)))
+        `(t ,(second form))
+        `((string= ,str1 ,(first form))
+          ,(second form))))
+  
+  )
 
 (defmacro string-case (string &body cases)
   `(cond ,@(mapcar (lambda (sym)
@@ -96,3 +100,4 @@ If there is no extension, or one that is unknown then the value of default is re
       ("3g2" "video/3gpp2")
       ("7z" "application/x-7z-compressed")
       (otherwise default))))
+
