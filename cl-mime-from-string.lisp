@@ -22,9 +22,9 @@
   "takes in a string like 'abc.txt' and returns its associated mime-type from https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types. 
 If there is no extension, or one that is unknown then the value of default is returned"
   (let* ((pos (position #\. file-string :test #'char= :from-end t))
-         (type (reverse (subseq file-string (if pos
-                                                (1+ pos)
-                                                0)))))
+         (type (subseq file-string (if pos
+                                       (1+ pos)
+                                       0))))
     (string-case type
       ("txt" "text/plain")
       ("aac" "audio/acc")
